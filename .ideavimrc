@@ -1,5 +1,16 @@
 set rnu
 
+inoremap <c-j> <Down>
+inoremap <c-k> <Up>
+inoremap <c-h> <Left>
+inoremap <c-d> <Delete>
+inoremap <c-l> <Right>
+cnoremap <c-d> <Delete>
+cnoremap <c-j> <Down>
+cnoremap <c-k> <Up>
+cnoremap <c-h> <Left>
+cnoremap <c-l> <Right>
+
 nnoremap J 5j
 nnoremap K 5k
 vnoremap J 5j
@@ -12,4 +23,5 @@ nnoremap ]e ddp
 nnoremap ]j J
 nnoremap [j kJ
 nnoremap Y v$y
-nnoremap gz ^f=B
+nnoremap gz 0f=B
+nnoremap <Enter> zo
