@@ -1,0 +1,11 @@
+[user]
+	name = Evgeniy Gryaznov
+	email = e.gryaznov@icloud.com
+[core]
+	autocrlf = input
+	safecrlf = true
+	editor = nvim
+	filemode = false
+[alias]
+	last = log -1 HEAD
+	visual = !gitk
