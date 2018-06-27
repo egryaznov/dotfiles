@@ -1,0 +1,15 @@
+set rnu
+
+nnoremap J 5j
+nnoremap K 5k
+vnoremap J 5j
+vnoremap K 5k
+nnoremap <BS> dd
+nnoremap [<SPACE> O<C-[>j
+nnoremap ]<SPACE> o<C-[>k
+nnoremap [e ddkP
+nnoremap ]e ddp
+nnoremap ]j J
+nnoremap [j kJ
+nnoremap Y v$y
+nnoremap gz ^f=B
