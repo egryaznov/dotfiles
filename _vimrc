@@ -1,17 +1,16 @@
 call plug#begin()
-Plug 'christianrondeau/vim-base64'
-Plug 'drmikehenry/vim-fontsize'
-Plug 'tpope/vim-vinegar'
-Plug 'egryaznov/vim-tautology'
+Plug 'w0rp/ale'
+Plug 'terryma/vim-expand-region'
+" Plug 'egryaznov/vim-tautology'
 Plug 'tommcdo/vim-exchange'
-Plug 'Yggdroot/LeaderF' | Plug 'Yggdroot/LeaderF-marks'
+" Plug 'Yggdroot/LeaderF' | Plug 'Yggdroot/LeaderF-marks'
 Plug 'ZeroKnight/vim-signjump'
-Plug 'Ron89/thesaurus_query.vim'
-Plug 'mjbrownie/browser.vim'
-Plug 'metakirby5/codi.vim'
-Plug 'jonhiggs/macdict.vim'
+" Plug 'Ron89/thesaurus_query.vim'
+" Plug 'mjbrownie/browser.vim'
+" Plug 'metakirby5/codi.vim'
+" Plug 'jonhiggs/macdict.vim'
 Plug 'nathanaelkane/vim-indent-guides'
-Plug 'lervag/vimtex'
+" Plug 'lervag/vimtex'
 Plug 'hdima/python-syntax/'
 " BEGIN THEMES
 Plug 'machakann/vim-colorscheme-tatami'
@@ -27,11 +26,7 @@ Plug 'joshdick/onedark.vim'
 " END THEMES
 Plug 'majutsushi/tagbar', { 'on' : 'TagbarToggle', 'for' : ['java', 'c', 'cpp', 'lisp', 'tex']}
 " BEGIN TEXT-OBJECT STUFF
-Plug 'kana/vim-textobj-user'
-Plug 'Julian/vim-textobj-brace'
-Plug 'beloglazov/vim-textobj-quotes'
-Plug 'thinca/vim-textobj-between'
-Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-user' | Plug 'Julian/vim-textobj-brace' | Plug 'kana/vim-textobj-indent' | Plug 'beloglazov/vim-textobj-quotes' | Plug 'thinca/vim-textobj-between' | Plug 'sgur/vim-textobj-parameter' | Plug 'Julian/vim-textobj-variable-segment' | Plug 'kana/vim-textobj-lastpat' | Plug 'kana/vim-textobj-entire'
 " END TEXT-OBJECT STUFF
 Plug 'tpope/vim-unimpaired'
 Plug 'reedes/vim-thematic'
@@ -53,7 +48,7 @@ Plug 'vim-airline/vim-airline' | Plug 'vim-airline/vim-airline-themes'
 Plug 'jceb/vim-commentary'
 Plug 'shougo/neocomplete.vim' | Plug 'shougo/neosnippet.vim' | Plug 'shougo/neosnippet-snippets'
 Plug 'shougo/context_filetype.vim'
-" Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-abolish'
 call plug#end()
 
@@ -118,8 +113,8 @@ augroup END                                                                     
 
 augroup StripWhitespace
     autocmd!
-    autocmd BufWritePost * StripWhitespace
-    autocmd FocusLost * StripWhitespace
+    autocmd BufWritePost * silent! StripWhitespace
+    autocmd FocusLost * silent! StripWhitespace
     autocmd FocusLost * silent! wall
 augroup END
 
@@ -137,10 +132,16 @@ function! g:ToggleNuMode()
   endif
 endfunction
 
-
+function! ToggleBackground()
+    if &background == light
+        set background=dark
+    else
+        set background=light
+    endif
+endfunction
 
 function! MyColors()
-  let morning=6
+  let morning=12
   let night=18
   if strftime("%H") >= morning && strftime("%H") <= night
     if &background == "dark"
@@ -161,15 +162,15 @@ augroup END
 
 
 
-augroup MyColors                                                 " Изменяет тему в зависимости от времени суток
-  autocmd!
-  autocmd BufWritePost *.txt,*.tex,*.py,*.java,*.c,*.lisp call MyColors()
-  autocmd VimEnter * call MyColors()
-augroup END
+" augroup MyColors                                                 " Изменяет тему в зависимости от времени суток
+"   autocmd!
+"   autocmd BufWritePost *.txt,*.tex,*.py,*.java,*.c,*.lisp call MyColors()
+"   autocmd VimEnter * call MyColors()
+" augroup END
 
 
 
-cd C:\Users\Evgeny.Gryaznov\VimFiles
+cd C:/Users/e.gryaznov/
 let mapleader="\<Space>"                                        " Сделать пробел mapleader'ом
 let maplocalleader="\<Tab>"
 set lines=999 columns=999                                       " Установить максимальное кол-во строк и столбцов
@@ -179,15 +180,14 @@ set autowriteall                                                " автомат
 set backspace=indent,eol,start                                  " make backspace work like most other apps
 set conceallevel=0
 set cmdheight=1                                                 " установить высоту cmd
-set diffopt=icase,filler,iwhite,horizontal
+set dictionary+=/usr/share/dict
 set encoding=utf-8                                              " Установить юникод-кодировку по умолчанию
-set fileencoding=utf-8
 set expandtab                                                   " always uses spaces instead of tab characters
 set foldenable                                                  " включить функцию фолдинга
 set foldlevel=1
 set foldclose=all
 set grepprg=grep\ -nH\ $*
-set guifont=Consolas\ NF:h13
+set guifont=Consolas:h16
 set gdefault                                                    " /g option in substitution by default
 set hlsearch                                                    " highlight searches
 set ignorecase                                                  " ignore case when searching
@@ -203,7 +203,7 @@ set nohidden                                                    " если ск�
 set noswapfile                                                  " не создавать своп-файл при закрытии буфера
 set noshellslash                                                " IMPORTANT: win32 users will need to have 'shellslash' set so that latex can be called correctly
 set relativenumber
-set sessionoptions+=resize
+set sessionoptions+=resize,winpos
 set shiftwidth=4                                                " size of an indent
 set shiftround
 set shortmess=a                                                 " сокращать все аббревиатуры
@@ -212,6 +212,7 @@ set smartcase                                                   " no ignorecase 
 set smartindent                                                 " делает то же, что и autoindent, плюс автоматически выставляет отступы в нужных местах
 set softtabstop=4                                               " a combination of spaces and tabs are used to simulate tab stops at a width other than the (hard)tabstop
 set spelllang=en,ru                                             " Установить русский и английский языки для правописания
+set thesaurus+=~/.vim/thesaurus
 set t_Co=256                                                    " Установить 256-цветовой режим
 set ttyfast                                                     " Убирает (надеюсь) лаги при прокрутке больших документов
 set viewoptions=cursor,folds,slash,unix
@@ -260,38 +261,56 @@ let g:airline#extensions#eclim#enabled          = 0
 let g:airline#extensions#tabline#enabled        = 1
 let g:airline#extensions#tabline#show_buffers   = 0
 let g:airline#extensions#tabline#show_tabs      = 1
-let g:airline#extensions#tabline#left_sep       = ">"
-let g:airline#extensions#tabline#left_alt_sep   = "|"
+" let g:airline#extensions#tabline#left_sep       = "\u2b80"
+" let g:airline#extensions#tabline#left_alt_sep   = "\u2b80"
 let g:airline#extensions#tagbar#enabled         = 0
 let g:airline#extensions#whitespace#enabled     = 0
 let g:airline#extensions#tabline#tab_min_count  = 2
 let g:airline#extensions#tabline#formatter      = 'unique_tail_improved'
 let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:airline_theme                             = "zenburn"
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-let g:airline_left_sep                   = ">"
-let g:airline_left_alt_sep               = "|"
-let g:airline_right_sep                  = "<"
-let g:airline_right_alt_sep              = "|"
-let g:airline_symbols.branch             = "B"
-let g:airline_symbols.readonly           = "R"
-let g:airline_symbols.linenr             = "ln"
+" if !exists('g:airline_symbols')
+"     let g:airline_symbols = {}
+" endif
+" let g:airline_left_sep                   = "\u2b80"
+" let g:airline_left_alt_sep               = "\u2b81"
+" let g:airline_right_sep                  = "\u2b82"
+" let g:airline_right_alt_sep              = "\u2b83"
+" let g:airline_symbols.branch             = "\u2b60"
+" let g:airline_symbols.readonly           = "\u2b64"
+" let g:airline_symbols.linenr             = "\u2b61"
+" let g:ale_lint_on_text_changed = 'always'
+" let g:ale_lint_on_enter = 1
+" let g:ale_linters = {
+" \   'LaTeX': ['chktex'],
+" \   'python': ['flake8']
+" \}
 let g:ctrlp_tabpage_position             = 'a'
+" let g:ctrlp_map                          = '±'
 let g:ctrlp_working_path_mode            = 'c'
 let g:EasyMotion_smartcase               = 1
-let g:fontsize#timeout                   = 0
+let g:expand_region_text_objects = {
+      \ 'iw'  :0,
+      \ 'iW'  :0,
+      \ 'i"'  :1,
+      \ 'i''' :1,
+      \ 'i]'  :1,
+      \ 'ib'  :1,
+      \ 'iB'  :1,
+      \ 'il'  :1,
+      \ 'ip'  :1,
+      \ 'ie'  :0,
+      \ }
 let g:indent_guides_color_change_percent = 50
 let g:Lf_StlSeparator                    = { 'left': "\u2b80", 'right': "\u2b82" }
 let g:Lf_RootMarkers                     =  ['.root']
 let g:Lf_WorkingDirectoryMode            = 'a'
-let g:neosnippet#snippets_directory      = 'C:\Users\Evgeny.Gryaznov\VimFiles\plugged\neosnippet-snippets\neosnippets'
+let g:neosnippet#snippets_directory      = '/Users/outofbound/.vim/plugged/neosnippet-snippets/neosnippets'
 let g:netrw_liststyle                    = 3 " Set listing style in NETRW
 let python_highlight_all                 = 1
 let g:rainbow_active                     = 1
 let g:rainbow_guifgs                     = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
-let g:startify_bookmarks                 = [{'v': 'C:\Program Files (x86)\Vim\_vimrc', 'i': 'C:\Users\Evgeny.Gryaznov\.ideavimrc'}]
+let g:startify_bookmarks                 = [{'v': 'C:\Users\e.gryaznov\Programs\Vim\_vimrc'}]
 let g:SignatureMap                       = {
     \ 'Leader'             :  "m",
     \ 'PlaceNextMark'      :  "m,",
@@ -318,7 +337,7 @@ let g:SignatureMap                       = {
 let g:surround_105                       = "\\textit{\r}" " Italize a region by 'i'
 let g:surround_98                        = "\\textbf{\r}" " Embolden a region by 'b'
 let g:surround_116                       = "\\texttt{\r}" " Verbatize a region by 't'
-let g:switch_mapping                     = ""
+let g:switch_mapping                     = "-"
 let g:switch_custom_definitions          =
     \ [
     \   ['itemize', 'enumerate'],
@@ -328,11 +347,9 @@ let g:switch_custom_definitions          =
     \   ['short', 'byte'],
     \   ['float', 'double'],
     \   ['StringBuffer', 'String'],
-    \   ['true', 'false'],
-    \   ['NotNull', 'Nullable']
+    \   ['@NotNull', '@Nullable']
     \ ]
 let g:tautology_mappings = 1
-" let g:tagbar_ctags_bin = 'C:\Users\Evgeny.Gryaznov\Programs\ctags58'
 let g:tagbar_type_latex = {
     \ 'ctagstype' : 'latex',
     \ 'kinds'     : [
@@ -363,13 +380,14 @@ let g:thematic#themes                     = {
 \ }
 let g:vimtex_fold_comments                = 1
 let g:vimtex_fold_preamble                = 1
+let g:vimtex_latexmk_build_dir            = '/Users/outofbound/VimFiles/thesis/tex/out'
 let g:vimtex_quickfix_autojump            = 1
 let g:vimtex_quickfix_ignore_all_warnings = 1
 let g:vimtex_quickfix_latexlog            = {'references' : 0} " Disable undefined warnings
 let g:vimtex_quickfix_open_on_warning     = 0
 let g:ultisnips_java_brace_style          = "nl"
 let g:UltiSnipsEditSplit                  = 'vertical'
-let g:UltiSnipsSnippetDirectories         = ["UltiSnips", "plugged\vim-snippets\UltiSnips"]
+let g:UltiSnipsSnippetDirectories         = ["UltiSnips", "plugged/vim-snippets/UltiSnips"]
 let g:UltiSnipsJumpForwardTrigger         = "<S-Tab>"
 let g:UltiSnipsJumpBackwardTrigger        = "<C-Tab>"
 
@@ -405,7 +423,6 @@ noremap Э "
 
 
 " Обычный режим
-nnoremap <C-c> :close<CR>
 nnoremap \ ,
 nnoremap <C-m> +
 nmap , <Plug>(easymotion-prefix)
@@ -442,28 +459,30 @@ nnoremap <CR> za
 nnoremap <BS> "_dd
 vnoremap <BS> "_d
 nnoremap <Leader>l :nohl<CR>
-nnoremap <Leader>c :%s:::n<CR>
 " Повторить последнюю команду (alt-;)
-nnoremap <M-;> :<Up><CR>
+nnoremap … :<Up><CR>
+nnoremap <Leader>V :Startify<CR>v
 nnoremap <Leader>S :Startify<CR>
-nnoremap <M-a> ggVG
-vnoremap <M-c> "+y
-vnoremap <M-k> 15k
-vnoremap <M-j> 15j
-nnoremap <M-k> 15k
-nnoremap <M-j> 15j
-nnoremap <M-y> :let @* = expand("%:p")<CR>
-nnoremap <Leader>s :wall<CR><CR>
+" Скопировать весь текст из текущего буфера
+nnoremap <Tab>Y ggVG"+y``zz
+vnoremap ˚ 15k
+vnoremap ∆ 15j
+nnoremap ˚ 15k
+nnoremap ∆ 15j
+nnoremap <Leader>w :wall<CR><CR>
+nnoremap ∂ "dyiw:call MacDict(@d)<CR>
 " Открыть новую вкладку
-nnoremap <C-t> :tabnew<CR>:Startify<CR>
+nnoremap <C-t> :tabnew<CR>
 " Открыть новый буфер в горизонтальном окне
-nnoremap <C-s> :vspit<CR>
+nnoremap <C-s> :spit<CR>
 nnoremap <Leader>n :enew<CR>
 nnoremap <Leader>N :NeoSnippetEdit -split<CR>
-nnoremap <Leader>V :tabnew<CR>:e C:\Program Files (x86)\Vim\_vimrc
-
-nnoremap <M-b> BB
-nnoremap <M-w> WW
+nnoremap <C-c> :close<CR>
+nnoremap <C-х> <ESC>
+nnoremap <Leader>V :tabnew<CR>:e ~/.vimrc<CR>
+nnoremap gz ^f=B
+nnoremap ∫ BB
+nnoremap ∑ WW
 nmap + ]j
 " Easymotion mappings
 nmap ,a <Plug>(easymotion-jumptoanywhere)
@@ -473,20 +492,16 @@ nmap ,x <Plug>(easymotion-prev)
 
 
 " Режим вставки
-inoremap <M-v> <C-o>"+P
 inoremap <C-f> <C-[>cw
 inoremap <C-l> <Right>
 inoremap <C-h> <Left>
 inoremap <C-k> <Up>
 inoremap <C-j> <Down>
-inoremap <C-f> <Del>
+inoremap <C-d> <Del>
+inoremap <S-BS> <ESC>"_ddi<BS><ESC>$ja
 inoremap <C-s> <C-o>o
 inoremap <C-v> <C-o>O
-inoremap <M-w> <C-o>cw
-inoremap <M-h> <C-o>B
-inoremap <M-l> <C-o>E
-inoremap <C-b> <C-o>^
-inoremap <C-]> <C-o>$
+
 
 
 
@@ -495,8 +510,6 @@ cnoremap <C-k> <Up>
 cnoremap <C-j> <Down>
 cnoremap <C-l> <Right>
 cnoremap <C-h> <Left>
-cnoremap <M-h> <S-Left>
-cnoremap <M-l> <S-Right>
 
 
 
@@ -525,7 +538,14 @@ endif
 endfunction
 
 
+nnoremap <Leader>0 :NERDTreeToggle<CR>
 nnoremap <Leader>1 :NeoSnippetEdit -split<CR>
 nnoremap <Leader>2 :call g:ToggleNuMode()<CR>
 nnoremap <Leader>3 :TagbarToggle<CR>
 nnoremap <Leader>4 :AirlineRefresh<CR>
+
+nnoremap <F1> :set guifont=Consolas:h12<CR>
+nnoremap <F2> :set guifont=Consolas:h14<CR>
+nnoremap <F3> :set guifont=Consolas:h16<CR>
+nnoremap <F4> :set guifont=Consolas:h18<CR>
+nnoremap <F12> :call g:ToggleBackground()<CR>
